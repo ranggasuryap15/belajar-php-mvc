@@ -24,11 +24,16 @@ class Router
         $method = $_SERVER['REQUEST_METHOD'];
 
         foreach (self::$routes as $route) {
-            if ($path == $route['path'] && $method == $route['method']) {
+            $pattern = '#^' . $route['path'] . '$#';
+
+            if (preg_match($pattern, $path, $variables) && $method == $route['method']) {
                 
                 $controller = new $route['controller']; // membuat objek
                 $function = $route['function']; // string function
-                $controller->$function(); // memanggil controller dengan function
+                // $controller->$function(); // memanggil controller dengan function
+
+                array_shift($variables);
+                call_user_func_array([$controller, $function], $variables);
                 return;
             }
         }
