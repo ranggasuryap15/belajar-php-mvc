@@ -1,0 +1,32 @@
+{
+    "name": "generuskoding/belajar-php-mvc",
+    "description": "Belajar PHP MVC (Model View Controller)",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Generuskoding\\BelajarPhpMvc\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "ranggasuryap15",
+            "email": "ranggasurya.313@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=8"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "9.5.8"
+    },
+    "autoload": {
+        "psr-4": {
+            "Generuskoding\\BelajarPhpMvc\\": "app"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Generuskoding\\BelajarPhpMvc\\": "tests"
+        }
+    }
+}
