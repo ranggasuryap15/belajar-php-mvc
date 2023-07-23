@@ -8,12 +8,15 @@ class Router
     private static array $routes = [];
 
     // untuk menambahkan routes-nya 
-    public static function add(string $method, string $path, string $controller, string $function):void {
+    public static function add(string $method, string $path, string $controller, string $function, array $middleware = []):void {
+
+
         self::$routes[] = [
             'method' => $method,
             'path' => $path,
             'controller' => $controller,
-            'function' => $function
+            'function' => $function,
+            'middleware' => $middleware
         ];
     }
 
@@ -23,6 +26,7 @@ class Router
 
         $method = $_SERVER['REQUEST_METHOD'];
 
+
         foreach (self::$routes as $route) {
             $pattern = '#^' . $route['path'] . '$#';
 
@@ -31,6 +35,12 @@ class Router
                 $controller = new $route['controller']; // membuat objek
                 $function = $route['function']; // string function
                 // $controller->$function(); // memanggil controller dengan function
+
+                // call middleware
+                foreach ($route['middleware'] as $middleware) {
+                    $instance = new $middleware;
+                    $instance->before();
+                }
 
                 array_shift($variables);
                 call_user_func_array([$controller, $function], $variables);
